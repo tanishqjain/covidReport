@@ -1,0 +1,17 @@
+{
+	"name": "tr_ingest_population_event",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/population/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/382de23c-ddb9-4966-871f-09497a1db5cc/resourceGroups/covid-reporting-rg/providers/Microsoft.Storage/storageAccounts/covidreportingudemysa",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
