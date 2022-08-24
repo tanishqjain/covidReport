@@ -125,14 +125,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"sourceRelativeUrl": {
-				"type": "string"
-			},
-			"sinkFileName": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
