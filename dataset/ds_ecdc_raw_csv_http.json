@@ -3,10 +3,19 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_ingest_ecdc_data",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"baseUrl": {
+					"value": "@dataset().baseUrl",
+					"type": "Expression"
+				}
+			}
 		},
 		"parameters": {
 			"relativeUrl": {
+				"type": "string"
+			},
+			"baseUrl": {
 				"type": "string"
 			}
 		},
