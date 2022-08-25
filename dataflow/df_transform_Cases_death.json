@@ -32,6 +32,9 @@
 				},
 				{
 					"name": "LookupCountryCodes"
+				},
+				{
+					"name": "selectForSink"
 				}
 			],
 			"scriptLines": [
@@ -83,7 +86,19 @@
 				"pivotCounts, CountryCodeLookup lookup(pivotCounts@country == CountryCodeLookup@country,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> LookupCountryCodes"
+				"     broadcast: 'auto')~> LookupCountryCodes",
+				"LookupCountryCodes select(mapColumn(",
+				"          country = pivotCounts@country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          {confirmed cases_count},",
+				"          deaths_count,",
+				"          population = pivotCounts@population,",
+				"          reported_date,",
+				"          source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectForSink"
 			]
 		}
 	}
