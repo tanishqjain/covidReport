@@ -1,0 +1,35 @@
+{
+	"name": "df_transform_Cases_death",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_raw_cases_and_deaths_df",
+						"type": "DatasetReference"
+					},
+					"name": "CasesAndDeathSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          Afghanistan as string,",
+				"          AFG as string,",
+				"          Asia as string,",
+				"          {38928341} as string,",
+				"          {confirmed cases} as string,",
+				"          {0} as string,",
+				"          {2020-01-02} as string,",
+				"          Prop_7 as string,",
+				"          {Epidemic intelligence, national daily data} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CasesAndDeathSource"
+			]
+		}
+	}
+}
