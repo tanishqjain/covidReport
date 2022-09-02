@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "tj-covid-report-adf"
+		},
+		"ls_ablob_covidreportingsa_connectionString": {
+			"value": ""
+		},
+		"ls_adls_covidreportingdl_accountKey": {
+			"value": ""
+		},
+		"ls_adls_covidreportingdl_properties_typeProperties_url": {
+			"value": "https://udemyreportcoviddl.dfs.core.windows.net/"
+		},
+		"ls_ingest_ecdc_data_properties_typeProperties_url": {
+			"value": "@{linkedService().baseUrl}"
+		},
+		"tr_population_report_event_properties_typeProperties_scope": {
+			"value": "/subscriptions/382de23c-ddb9-4966-871f-09497a1db5cc/resourceGroups/covid-reporting-rg/providers/Microsoft.Storage/storageAccounts/covidreportingudemysa"
+		}
+	}
+}
