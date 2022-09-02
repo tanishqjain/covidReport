@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "CountryCode"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_dim_date_dl",
+						"type": "DatasetReference"
+					},
+					"name": "DimDate"
 				}
 			],
 			"sinks": [],
@@ -57,6 +64,23 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> CountryCode",
+				"source(output(",
+				"          date_key as integer,",
+				"          date as date,",
+				"          year as short,",
+				"          month as short,",
+				"          day as short,",
+				"          day_name as string,",
+				"          day_of_year as short,",
+				"          week_of_month as short,",
+				"          week_of_year as short,",
+				"          month_name as string,",
+				"          year_month as integer,",
+				"          year_week as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DimDate",
 				"HospitalAdmissionsSource select(mapColumn(",
 				"          country,",
 				"          indicator,",
