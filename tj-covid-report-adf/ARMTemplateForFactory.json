@@ -377,6 +377,54 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pl_process_cases_and_deaths_data')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "df_transform_Cases_death",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_transform_Cases_death",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"CasesAndDeathSource": {},
+									"CountryCodeLookup": {},
+									"CasesAndDeathsSink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_transform_Cases_death')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_cases_and_deaths_sink_dl')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -731,7 +779,8 @@
 			"properties": {
 				"parameters": {
 					"baseUrl": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "https://raw.githubusercontent.com"
 					}
 				},
 				"annotations": [],
