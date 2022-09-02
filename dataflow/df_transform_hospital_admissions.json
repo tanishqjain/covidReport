@@ -29,6 +29,9 @@
 				},
 				{
 					"name": "RemoveunwantedFields"
+				},
+				{
+					"name": "StreamSplit"
 				}
 			],
 			"scriptLines": [
@@ -79,7 +82,9 @@
 				"          source",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> RemoveunwantedFields"
+				"     skipDuplicateMapOutputs: true) ~> RemoveunwantedFields",
+				"RemoveunwantedFields split(indicator=='Daily hospital occupancy'||indicator=='Daily ICU occupancy',",
+				"     disjoint: false) ~> StreamSplit@(DailyData, WeeklyData)"
 			]
 		}
 	}
