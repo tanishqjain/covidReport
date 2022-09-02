@@ -1,0 +1,9 @@
+{
+	"name": "tj-covid-report-adf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1531ccbc-3733-4f91-b8fe-407549c23dd8",
+		"tenantId": "e7dbc2dc-5ce8-49e1-bde1-3b3c8cbf6a80"
+	}
+}
