@@ -39,6 +39,9 @@
 				},
 				{
 					"name": "StreamSplit"
+				},
+				{
+					"name": "WeekDatesLookup"
 				}
 			],
 			"scriptLines": [
@@ -108,7 +111,11 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RemoveunwantedFields",
 				"RemoveunwantedFields split(indicator=='Daily hospital occupancy'||indicator=='Daily ICU occupancy',",
-				"     disjoint: false) ~> StreamSplit@(DailyData, WeeklyData)"
+				"     disjoint: false) ~> StreamSplit@(DailyData, WeeklyData)",
+				"StreamSplit@WeeklyData, DimDate lookup(toShort(substringIndex(reported_year_week,'W',2)) == week_of_month",
+				"     && toShort(substring(reported_year_week,0,4)) == year,",
+				"     multiple: true,",
+				"     broadcast: 'auto')~> WeekDatesLookup"
 			]
 		}
 	}
