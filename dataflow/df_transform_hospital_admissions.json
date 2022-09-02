@@ -10,12 +10,25 @@
 						"type": "DatasetReference"
 					},
 					"name": "HospitalAdmissionsSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_country_code_lookup",
+						"type": "DatasetReference"
+					},
+					"name": "CountryCode"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
 					"name": "SelectRelevantFields"
+				},
+				{
+					"name": "CountryCodeLookup"
+				},
+				{
+					"name": "RemoveunwantedFields"
 				}
 			],
 			"scriptLines": [
@@ -31,6 +44,16 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> HospitalAdmissionsSource",
+				"source(output(",
+				"          country as string,",
+				"          country_code_2_digit as string,",
+				"          country_code_3_digit as string,",
+				"          continent as string,",
+				"          population as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CountryCode",
 				"HospitalAdmissionsSource select(mapColumn(",
 				"          country,",
 				"          indicator,",
@@ -40,7 +63,23 @@
 				"          source",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectRelevantFields"
+				"     skipDuplicateMapOutputs: true) ~> SelectRelevantFields",
+				"SelectRelevantFields, CountryCode lookup(SelectRelevantFields@country == CountryCode@country,",
+				"     multiple: true,",
+				"     broadcast: 'auto')~> CountryCodeLookup",
+				"CountryCodeLookup select(mapColumn(",
+				"          country = SelectRelevantFields@country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          population,",
+				"          indicator,",
+				"          reported_date,",
+				"          reported_year_week,",
+				"          value,",
+				"          source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RemoveunwantedFields"
 			]
 		}
 	}
