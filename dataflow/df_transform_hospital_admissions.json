@@ -243,11 +243,13 @@
 				"          reported_date as string,",
 				"          source as string",
 				"     ),",
+				"     partitionFileNames:['weekly_file.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> WeeklySink"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> WeeklySink"
 			]
 		}
 	}
