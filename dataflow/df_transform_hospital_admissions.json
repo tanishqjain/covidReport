@@ -48,6 +48,12 @@
 				},
 				{
 					"name": "joinWeeklyDimDate"
+				},
+				{
+					"name": "DailyPivot1"
+				},
+				{
+					"name": "pivot1"
 				}
 			],
 			"scriptLines": [
@@ -126,7 +132,29 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> joinWeeklyDimDate"
+				"     broadcast: 'auto')~> joinWeeklyDimDate",
+				"StreamSplit@DailyData pivot(groupBy(country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          population,",
+				"          reported_date,",
+				"          source),",
+				"     pivotBy(indicator, ['Daily ICU occupancy', 'Daily hospital occupancy']),",
+				"     count = sum(value),",
+				"     columnNaming: '$N_$V',",
+				"     lateral: false) ~> DailyPivot1",
+				"joinWeeklyDimDate pivot(groupBy(country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          population,",
+				"          reported_year_week,",
+				"          week_start_date,",
+				"          week_end_date,",
+				"          source),",
+				"     pivotBy(indicator, ['Weekly new hospital admissions per 100k', 'Weekly new ICU admissions per 100k']),",
+				"     count = sum(value),",
+				"     columnNaming: '$V_$N',",
+				"     lateral: true) ~> pivot1"
 			]
 		}
 	}
