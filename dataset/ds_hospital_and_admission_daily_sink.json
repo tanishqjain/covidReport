@@ -1,5 +1,5 @@
 {
-	"name": "ds_hospital_and_admission_dialy_sink",
+	"name": "ds_hospital_and_admission_daily_sink",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_covidreportingdl",
