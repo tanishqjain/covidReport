@@ -65,13 +65,33 @@
 					},
 					"ls_ingest_ecdc_data_properties_typeProperties_url": {
 						"value": "[parameters('ls_ingest_ecdc_data_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "tj-covid-report-adf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"tr_population_report_event_properties_typeProperties_scope": {
 						"value": "[parameters('tr_population_report_event_properties_typeProperties_scope')]"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'tj-covid-report-adf_ArmTemplate_0')]"
+			]
 		}
 	]
 }
