@@ -45,6 +45,9 @@
 				},
 				{
 					"name": "dimDateAggregate"
+				},
+				{
+					"name": "joinWeeklyDimDate"
 				}
 			],
 			"scriptLines": [
@@ -118,7 +121,12 @@
 				"DimDate derive(ecdc_year_week = toString(year)+'-W'+lpad(toString(week_of_year) , 2, '0')) ~> DeriveYearDateColumn",
 				"DeriveYearDateColumn aggregate(groupBy(ecdc_year_week),",
 				"     week_start_date = min(date),",
-				"          week_end_date = max(date)) ~> dimDateAggregate"
+				"          week_end_date = max(date)) ~> dimDateAggregate",
+				"StreamSplit@WeeklyData, dimDateAggregate join(reported_year_week == ecdc_year_week,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinWeeklyDimDate"
 			]
 		}
 	}
