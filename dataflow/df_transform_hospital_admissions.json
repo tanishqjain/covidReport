@@ -29,14 +29,14 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ds_hospital_and_admission_sink",
+						"referenceName": "ds_hospital_and_admission_dialy_sink",
 						"type": "DatasetReference"
 					},
 					"name": "DailySink"
 				},
 				{
 					"dataset": {
-						"referenceName": "ds_hospital_and_admission_sink",
+						"referenceName": "ds_hospital_and_admission_dialy_sink",
 						"type": "DatasetReference"
 					},
 					"name": "WeeklySink"
@@ -224,13 +224,11 @@
 				"          reported_date as string,",
 				"          source as string",
 				"     ),",
-				"     partitionFileNames:['Daily_File.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> DailySink",
+				"     skipDuplicateMapOutputs: true) ~> DailySink",
 				"WeeklySelectForSink sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

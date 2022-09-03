@@ -1,5 +1,5 @@
 {
-	"name": "ds_hospital_and_admission_sink",
+	"name": "ds_hospital_and_admission_dialy_sink",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_covidreportingdl",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "ecdc/hospital_admissions",
+				"folderPath": "ecdc/hospital_admissions_daily",
 				"fileSystem": "processed"
 			},
 			"columnDelimiter": ",",
