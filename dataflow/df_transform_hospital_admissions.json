@@ -41,7 +41,10 @@
 					"name": "StreamSplit"
 				},
 				{
-					"name": "WeekDatesLookup"
+					"name": "DeriveYearDateColumn"
+				},
+				{
+					"name": "dimDateAggregate"
 				}
 			],
 			"scriptLines": [
@@ -112,10 +115,10 @@
 				"     skipDuplicateMapOutputs: true) ~> RemoveunwantedFields",
 				"RemoveunwantedFields split(indicator=='Daily hospital occupancy'||indicator=='Daily ICU occupancy',",
 				"     disjoint: false) ~> StreamSplit@(DailyData, WeeklyData)",
-				"StreamSplit@WeeklyData, DimDate lookup(toShort(substringIndex(reported_year_week,'W',2)) == week_of_month",
-				"     && toShort(substring(reported_year_week,0,4)) == year,",
-				"     multiple: true,",
-				"     broadcast: 'auto')~> WeekDatesLookup"
+				"DimDate derive(ecdc_year_week = toString(year)+'-W'+lpad(toString(week_of_year) , 2, '0')) ~> DeriveYearDateColumn",
+				"DeriveYearDateColumn aggregate(groupBy(ecdc_year_week),",
+				"     week_start_date = min(date),",
+				"          week_end_date = max(date)) ~> dimDateAggregate"
 			]
 		}
 	}
